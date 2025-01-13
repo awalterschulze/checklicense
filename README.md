@@ -4,7 +4,7 @@ checklicense is a tool to be used as part of CI to check that each file includes
 It returns with exit code 1, if there are any files without a license as a header.
 
 ```
-$ checklicense <folder to scan> <list of files and folders to exclude from the scan separated by spaces>
+$ checklicense <folder to scan> <list of files to exclude from the scan separated by spaces>
 ```
 
 ## Languages officially support
@@ -13,7 +13,7 @@ This tool does not make many assumptions about languages and could easily be adj
 
 * Go
 
-## Files and Folders excluded by default
+## Files excluded by default
 
 * `.git`
 * `.github`
@@ -23,6 +23,8 @@ This tool does not make many assumptions about languages and could easily be adj
 * `readme.*`
 * `Readme.*`
 * `README.*`
+* `go.mod`
+* `go.sum`
 
 ## Files starting with the following are also excluded:
 
