@@ -24,6 +24,7 @@ import (
 )
 
 var excludedFiles = []string{
+	".git",
 	"LICENSE",
 	".gitignore",
 	".DS_Store",
@@ -53,14 +54,14 @@ func main() {
 		if strings.HasPrefix(path, ".git") {
 			return nil
 		}
+		for _, exclude := range excludedFiles {
+			if path == exclude {
+				return nil
+			}
+		}
 		base := filepath.Base(path)
 		if strings.HasPrefix(strings.ToLower(base), "readme") {
 			return nil
-		}
-		for _, exclude := range excludedFiles {
-			if base == exclude {
-				return nil
-			}
 		}
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
