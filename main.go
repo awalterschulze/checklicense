@@ -34,7 +34,18 @@ func main() {
 		if err != nil {
 			return err
 		}
+		
 		if info.IsDir() {
+			// skip a few folders by default
+			var excludedFolders = []string{
+				".git",
+				".github",
+			}
+			for _, excludedFolder := range excludedFolders {
+				if path == excludedFolder {
+					return filepath.SkipDir
+				}
+			}
 			return nil
 		}
 
@@ -50,10 +61,8 @@ func main() {
 			return nil
 		}
 
-		// skip a few more files by default
+		// skip a few files by default
 		var excludedFiles = []string{
-			// file containing git database
-			".git",
 			// license file
 			"LICENSE",
 			// files to ignore in git

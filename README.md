@@ -13,10 +13,13 @@ This tool does not make many assumptions about languages and could easily be adj
 
 * Go
 
-## Files excluded by default
+## Folders excluded by default
 
 * `.git`
 * `.github`
+
+## Files excluded by default
+
 * `LICENSE`
 * `.gitignore`
 * `.DSStore`
