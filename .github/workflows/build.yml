@@ -17,5 +17,5 @@ jobs:
     - name: Check license
       run: |
         cd gopath/github.com/awalterschulze/checklicense
-        go install -x github.com/awalterschulze/checklicense
+        go install github.com/awalterschulze/checklicense@latest
         checklicense .

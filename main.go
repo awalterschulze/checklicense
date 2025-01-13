@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//Command that checks each file for a license
+// Command that checks each file for a license
 package main
 
 import (
@@ -23,12 +23,20 @@ import (
 	"strings"
 )
 
+var excludedFiles = []string{
+	"LICENSE",
+	".gitignore",
+	".DS_Store",
+	"go.mod",
+	"go.sum",
+}
+
 func main() {
 	if len(os.Args) <= 1 {
 		fmt.Fprintf(os.Stderr, "no folder specified\n")
 		os.Exit(1)
 	}
-	exceptions := os.Args[2:]
+	userExceptions := os.Args[2:]
 	files := []string{}
 	err := filepath.Walk(os.Args[1], func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -37,8 +45,8 @@ func main() {
 		if info.IsDir() {
 			return nil
 		}
-		for _, filepart := range exceptions {
-			if strings.HasSuffix(path, filepart) {
+		for _, userException := range userExceptions {
+			if strings.HasSuffix(path, userException) {
 				return nil
 			}
 		}
@@ -46,17 +54,13 @@ func main() {
 			return nil
 		}
 		base := filepath.Base(path)
-		if base == "LICENSE" {
-			return nil
-		}
-		if base == ".gitignore" {
-			return nil
-		}
 		if strings.HasPrefix(strings.ToLower(base), "readme") {
 			return nil
 		}
-		if strings.HasPrefix(base, ".DS_Store") {
-			return nil
+		for _, exclude := range excludedFiles {
+			if base == exclude {
+				return nil
+			}
 		}
 		data, err := ioutil.ReadFile(path)
 		if err != nil {
