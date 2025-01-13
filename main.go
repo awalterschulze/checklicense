@@ -12,7 +12,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-//Internal command that checks each file for a license
+//Command that checks each file for a license
 package main
 
 import (
@@ -42,7 +42,7 @@ func main() {
 				return nil
 			}
 		}
-		if strings.Contains(path, ".git") {
+		if strings.HasPrefix(path, ".git") {
 			return nil
 		}
 		base := filepath.Base(path)
