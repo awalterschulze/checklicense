@@ -16,6 +16,7 @@ This tool does not make many assumptions about languages and could easily be adj
 ## Files and Folders excluded by default
 
 * `.git`
+* `.github`
 * `LICENSE`
 * `.gitignore`
 * `.DSStore`
@@ -30,18 +31,4 @@ This tool does not make many assumptions about languages and could easily be adj
 
 ## Setup Github CI
 
-```
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Setup Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: 1.22
-    - name: Check license
-      run: |
-        go install -x github.com/awalterschulze/checklicense
-        checklicense <folder to check> <excluded folder or file 1> <excluded folder or file 2>
-        
-```
+See [./.github/workflows/build.yml](./.github/workflows/build.yml) for an example.
