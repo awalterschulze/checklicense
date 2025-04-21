@@ -5,13 +5,10 @@ author: awalterschulze
 
 # Define your inputs here.
 inputs:
+  path:
+    description: Path
   ignores:
     description: Ignores
-
-# Define your outputs here.
-outputs:
-  missinglicense:
-    description: Files missing a license
 
 runs:
   using: docker

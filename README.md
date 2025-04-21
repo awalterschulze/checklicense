@@ -18,9 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checklicencse
-      uses: awalterschulze/checklicense@v1.0.5
+      uses: awalterschulze/checklicense@v1.0.6
       with:
-        ignores: doc.go tools/tools.go .svg .txt
+        path: .
+        ignores: doc.go .svg .txt
 ```
 
 `ignores` lists the files and folders to ignore.
