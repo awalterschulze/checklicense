@@ -51,7 +51,7 @@ func main() {
 				".github",
 			}
 			for _, excludedFolder := range excludedFolders {
-				if path == excludedFolder {
+				if strings.HasSuffix(path, excludedFolder) {
 					return filepath.SkipDir
 				}
 			}
@@ -116,14 +116,6 @@ func main() {
 		return
 	}
 	fmt.Fprintf(os.Stderr, "ERROR The following files still needs a LICENSE: [%s]\n", strings.Join(files, ", "))
-
-	// write output for github action
-	outputFileName := os.Getenv("GITHUB_OUTPUT")
-	if len(outputFileName) > 0 {
-		if err := os.WriteFile(outputFileName, []byte(strings.Join(files, " \n")), 0666); err != nil {
-			panic(err)
-		}
-	}
 
 	os.Exit(1)
 }
