@@ -68,7 +68,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          ignores: main action.yml
+          ignores: action.yml Dockerfile
 
       - name: Print Output
         id: output
