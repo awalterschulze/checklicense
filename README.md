@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checklicencse
-      uses: awalterschulze/checklicense@v1.0.4
+      uses: awalterschulze/checklicense@v1.0.5
       with:
         ignores: doc.go tools/tools.go .svg .txt
 ```
