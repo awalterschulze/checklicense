@@ -1,9 +1,18 @@
-FROM golang:1.24
+# build
 
-WORKDIR /usr/src
+FROM golang:1.24 AS builder
 
-COPY main.go .
+WORKDIR /go/src/awalterschulze/checklicense
 
-RUN go build main.go
+COPY . .
 
-ENTRYPOINT ["./main"]
+RUN CGO_ENABLED=0 go build -ldflags "-s -w" .
+
+# run
+
+FROM alpine:3 AS production
+LABEL maintainer="Walter Schulze <awalterschulze@users.noreply.github.com>"
+
+COPY --from=builder /go/src/awalterschulze/checklicense/main /usr/bin/checklicense
+
+ENTRYPOINT ["/usr/bin/checklicense"]
