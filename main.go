@@ -32,6 +32,12 @@ func main() {
 		userExceptions = os.Args[2:]
 	}
 
+	// overwrite path with github action environment variable
+	folderEnv := os.Getenv("INPUT_PATH")
+	if len(folderEnv) > 0 {
+		folder = folderEnv
+	}
+
 	// user exceptions from the github action environment variable
 	userEnvException := os.Getenv("INPUT_IGNORES")
 	userEnvExceptions := strings.Split(userEnvException, " ")
