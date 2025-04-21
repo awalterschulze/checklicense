@@ -26,7 +26,7 @@ func main() {
 	// default folder
 	folder := "."
 	userExceptions := []string{}
-	if len(os.Args) >= 1 {
+	if len(os.Args) > 1 {
 		folder = os.Args[1]
 		// user exceptions from the command line arguments
 		userExceptions = os.Args[2:]
