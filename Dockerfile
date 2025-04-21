@@ -13,6 +13,6 @@ RUN CGO_ENABLED=0 go build -ldflags "-s -w" .
 FROM alpine:3 AS production
 LABEL maintainer="Walter Schulze <awalterschulze@users.noreply.github.com>"
 
-COPY --from=builder /go/src/awalterschulze/checklicense/main /usr/bin/checklicense
+COPY --from=builder /go/src/awalterschulze/checklicense/checklicense /usr/bin/checklicense
 
 ENTRYPOINT ["/usr/bin/checklicense"]
