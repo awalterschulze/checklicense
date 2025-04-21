@@ -17,24 +17,33 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
 func main() {
-	if len(os.Args) <= 1 {
-		fmt.Fprintf(os.Stderr, "no folder specified\n")
-		os.Exit(1)
+	// default folder
+	folder := "."
+	userExceptions := []string{}
+	if len(os.Args) >= 1 {
+		folder = os.Args[1]
+		// user exceptions from the command line arguments
+		userExceptions = os.Args[2:]
 	}
-	userExceptions := os.Args[2:]
+
+	// user exceptions from the github action environment variable
+	userEnvException := os.Getenv("INPUT_IGNORES")
+	userEnvExceptions := strings.Split(userEnvException, " ")
+	// combine both sources of user exceptions
+	userExceptions = append(userExceptions, userEnvExceptions...)
+
 	files := []string{}
-	err := filepath.Walk(os.Args[1], func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(folder, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
-		
+
 		if info.IsDir() {
 			// skip a few folders by default
 			var excludedFolders = []string{
@@ -79,7 +88,7 @@ func main() {
 			}
 		}
 
-		data, err := ioutil.ReadFile(path)
+		data, err := os.ReadFile(path)
 		if err != nil {
 			return err
 		}
@@ -107,5 +116,14 @@ func main() {
 		return
 	}
 	fmt.Fprintf(os.Stderr, "ERROR The following files still needs a LICENSE: [%s]\n", strings.Join(files, ", "))
+
+	// write output for github action
+	outputFileName := os.Getenv("GITHUB_OUTPUT")
+	if len(outputFileName) > 0 {
+		if err := os.WriteFile(outputFileName, []byte(strings.Join(files, " \n")), 0666); err != nil {
+			panic(err)
+		}
+	}
+
 	os.Exit(1)
 }

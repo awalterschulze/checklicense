@@ -1,0 +1,19 @@
+name: checklicense
+description: Check License
+author: awalterschulze
+
+# Define your inputs here.
+inputs:
+  ignores:
+    description: Ignores
+
+# Define your outputs here.
+outputs:
+  missinglicense:
+    description: Files missing a license
+
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    INPUT_IGNORES: ${{ inputs.ignores }}
