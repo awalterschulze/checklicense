@@ -1,3 +1,5 @@
+# Copied from https://github.com/mikefarah/yq/blob/master/Dockerfile
+
 # build
 
 FROM golang:1.24 AS builder
